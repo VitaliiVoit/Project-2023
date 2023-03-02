@@ -22,10 +22,7 @@ public sealed class Length : Measurement
         get => _unit;
         init
         {
-            if (MeasurementType.Length != value.Measurement)
-            {
-                throw new ArgumentException("Об'єкт одиниці вимірювання не може бути пустим або іншим");
-            }
+            UnitValidator.ValidateUnitType(value, MeasurementType.Length);
             _unit = value;
         } 
     }

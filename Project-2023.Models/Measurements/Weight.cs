@@ -22,10 +22,7 @@ public sealed class Weight : Measurement
         get => _unit;
         init
         {
-            if (MeasurementType.Weigth != value.Measurement)
-            {
-                throw new ArgumentException("Об'єкт одиниці вимірювання не може бути пустим або іншим");
-            }
+            UnitValidator.ValidateUnitType(value, MeasurementType.Weigth);
             _unit = value;
         }
     }

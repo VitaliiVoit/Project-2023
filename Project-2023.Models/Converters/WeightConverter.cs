@@ -12,7 +12,7 @@ public class WeightConverter : IMetricConverter
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Weigth);
         UnitValidator.ValidateUnitType(unit, MeasurementType.Weigth);
 
-        return unit.Name switch
+        return unit.Name.ToLower() switch
         {
             "pound" => new Weight(measurement.Value / 0.4536, unit),
             "stone" => new Weight(measurement.Value / 6.3503, unit),
@@ -25,7 +25,7 @@ public class WeightConverter : IMetricConverter
     {
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Weigth);
 
-        return measurement.Unit.Name switch
+        return measurement.Unit.Name.ToLower() switch
         {
             "pound" => new Weight(measurement.Value * 0.4536, WeightUnits.Kilogram),
             "stone" => new Weight(measurement.Value * 6.3503, WeightUnits.Kilogram),

@@ -12,7 +12,7 @@ public class LengthConverter : IMetricConverter
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
         UnitValidator.ValidateUnitType(unit, MeasurementType.Length);
 
-        return unit.Name switch
+        return unit.Name.ToLower() switch
         {
             "inch" => new Length(measurement.Value / 0.0254, unit),
             "foot" => new Length(measurement.Value / 0.3048, unit),
@@ -26,7 +26,7 @@ public class LengthConverter : IMetricConverter
     {
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
 
-        return measurement.Unit.Name switch
+        return measurement.Unit.Name.ToLower() switch
         {
             "inch" => new Length(measurement.Value * 0.0254, LengthUnits.Metre),
             "foot" => new Length(measurement.Value * 0.3048, LengthUnits.Metre),
