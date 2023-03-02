@@ -2,10 +2,16 @@
 
 namespace Project_2023.Models.Converters;
 
+/// <summary>
+/// Конвертер довжини
+/// </summary>
 public class LengthConverter : IMetricConverter
 {
     public Measurement ConvertFromMetric(Measurement measurement, Unit unit)
     {
+        MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
+        UnitValidator.ValidateUnitType(unit, MeasurementType.Length);
+
         return unit.Name switch
         {
             "inch" => new Length(measurement.Value / 0.0254, unit),
@@ -18,6 +24,8 @@ public class LengthConverter : IMetricConverter
 
     public Measurement ConvertToMetric(Measurement measurement)
     {
+        MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
+
         return measurement.Unit.Name switch
         {
             "inch" => new Length(measurement.Value * 0.0254, LengthUnits.Metre),

@@ -2,10 +2,16 @@
 
 namespace Project_2023.Models.Converters;
 
+/// <summary>
+/// Конвертер маси
+/// </summary>
 public class WeightConverter : IMetricConverter
 {
     public Measurement ConvertFromMetric(Measurement measurement, Unit unit)
     {
+        MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Weigth);
+        UnitValidator.ValidateUnitType(unit, MeasurementType.Weigth);
+
         return unit.Name switch
         {
             "pound" => new Weight(measurement.Value / 0.4536, unit),
@@ -17,6 +23,8 @@ public class WeightConverter : IMetricConverter
 
     public Measurement ConvertToMetric(Measurement measurement)
     {
+        MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Weigth);
+
         return measurement.Unit.Name switch
         {
             "pound" => new Weight(measurement.Value * 0.4536, WeightUnits.Kilogram),

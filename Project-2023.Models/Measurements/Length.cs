@@ -1,5 +1,8 @@
 ﻿namespace Project_2023.Models.Measurements;
 
+/// <summary>
+/// Довжина
+/// </summary>
 public sealed class Length : Measurement
 {
     public override double Value 
@@ -42,14 +45,8 @@ public sealed class Length : Measurement
     public override int CompareTo(Measurement? other)
     {
         if (other is null) throw new ArgumentNullException("Об'єкт для порівннян пустий");
-        if (other.Unit.Measurement != MeasurementType.Length)
-        {
-            throw new ArgumentException("Не можна порівняти між собою дві різні фізичні велечини");
-        }
-        if (!string.Equals(Unit.Name, other.Unit.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArithmeticException("Не можна порівняти між собою різні одиниці вимірювання");
-        }
+        MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Length);
+        UnitValidator.CompareUnits(Unit, other.Unit);
 
         return Value.CompareTo(other.Value);
     }
@@ -57,14 +54,8 @@ public sealed class Length : Measurement
     public override bool Equals(Measurement? other)
     {
         if (other is null) throw new ArgumentNullException("Об'єкт для порівннян пустий");
-        if (other.Unit.Measurement != MeasurementType.Length)
-        {
-            throw new ArgumentException("Не можна порівняти між собою дві різні фізичні велечини");
-        }
-        if (!string.Equals(Unit.Name, other.Unit.Name, StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArithmeticException("Не можна порівняти між собою різні одиниці вимірювання");
-        }
+        MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Length);
+        UnitValidator.CompareUnits(Unit, other.Unit);
 
         return Value.Equals(other.Value);
     }
