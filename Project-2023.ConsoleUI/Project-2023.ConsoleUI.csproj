@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Program.cs~RF1fe3a4f1.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Project-2023.Models\Project-2023.Models.csproj" />
   </ItemGroup>
 
