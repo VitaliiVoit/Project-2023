@@ -16,10 +16,10 @@ public class LengthConverter : IMetricConverter
         
         return unit.Name.ToLower() switch
         {
-            "inch" => new Length(measurement.Value / 0.0254, unit),
-            "foot" => new Length(measurement.Value / 0.3048, unit),
-            "yard" => new Length(measurement.Value / 0.9144, unit),
-            "mile" => new Length(measurement.Value / 1609.344, unit),
+            "inch" => new Length(Math.Round(measurement.Value / 0.0254, 4), unit),
+            "foot" => new Length(Math.Round(measurement.Value / 0.3048, 4), unit),
+            "yard" => new Length(Math.Round(measurement.Value / 0.9144, 4), unit),
+            "mile" => new Length(Math.Round(measurement.Value / 1609.344, 4), unit),
             _ => (Length)measurement,
         };
     }

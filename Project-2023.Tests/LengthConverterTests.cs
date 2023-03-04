@@ -23,10 +23,11 @@ public class LengthConverterTests
         var oneMetreToInch = 39.3701;
 
         var result = converter.ConvertFromMetric(length, LengthUnits.Inch);
+
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Inch.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneMetreToInch:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneMetreToInch));
         });
     }
 
@@ -40,7 +41,7 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Foot.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneMetreToFoot:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneMetreToFoot));
         });
     }
 
@@ -54,7 +55,7 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Yard.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneMetreToYard:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneMetreToYard));
         });
     }
 
@@ -68,7 +69,7 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Mile.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneMetreToMile:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneMetreToMile));
         });
     }
 
@@ -83,7 +84,7 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Metre.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneInchToMetre:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneInchToMetre));
         });
     }
 
@@ -98,7 +99,7 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Metre.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneFootToMetre:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneFootToMetre));
         });
     }
 
@@ -113,7 +114,7 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Metre.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneYardToMetre:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneYardToMetre));
         });
     }
 
@@ -128,7 +129,57 @@ public class LengthConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(LengthUnits.Metre.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneMileToMetre:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneMileToMetre));
         });
+    }
+
+    [Test]
+    public void EqualsTest()
+    {
+        var oneInch = new Length(1, LengthUnits.Inch);
+        var oneInchToMetre = new Length(0.0254);
+
+        var result = oneInch.Equals(oneInchToMetre);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.True);
+            Assert.That(oneInch, Is.EqualTo(oneInchToMetre));
+        });
+    }
+
+    [Test]
+    public void CompareToTest()
+    {
+        var oneInch = new Length(1, LengthUnits.Inch);
+        var oneInchToMetre = new Length(0.0254);
+
+        var result = oneInch.CompareTo(oneInchToMetre);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo(0));
+            Assert.That(oneInch, Is.EqualTo(oneInchToMetre));
+        });
+    }
+
+    [Test]
+    public void SortTest()
+    {
+        var oneMetre = new Length(1);
+        var oneInch = new Length(1, LengthUnits.Inch);
+        var oneFoot = new Length(1, LengthUnits.Foot);
+        var oneYard = new Length(1, LengthUnits.Yard);
+        var oneMile = new Length(1, LengthUnits.Mile);
+
+        var list = new List<Measurement>()
+        {
+            oneMile, oneYard, oneInch, oneMetre, oneFoot
+        };
+        var result = list.Order().ToList();
+        var sortedList = new List<Measurement>()
+        {
+            oneInch, oneFoot, oneYard, oneMetre, oneMile
+        };
+
+        Assert.That(result, Is.EqualTo(sortedList));
     }
 }

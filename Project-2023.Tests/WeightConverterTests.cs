@@ -27,7 +27,7 @@ public class WeightConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(WeightUnits.Pound.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneKilogramToPound:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneKilogramToPound));
         });
     }
 
@@ -41,7 +41,7 @@ public class WeightConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(WeightUnits.Stone.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneKilogramToStone:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneKilogramToStone));
         });
     }
 
@@ -55,7 +55,7 @@ public class WeightConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(WeightUnits.Ounce.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneKilogramToOunce:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneKilogramToOunce));
         });
     }
 
@@ -70,7 +70,7 @@ public class WeightConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(WeightUnits.Kilogram.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{onePoundToKilogram:f4}"));
+            Assert.That(result.Value, Is.EqualTo(onePoundToKilogram));
         });
     }
 
@@ -85,7 +85,7 @@ public class WeightConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(WeightUnits.Kilogram.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneStoneToKilogram:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneStoneToKilogram));
         });
     }
 
@@ -100,7 +100,35 @@ public class WeightConverterTests
         Assert.Multiple(() =>
         {
             Assert.That(result.Unit.Name, Is.EqualTo(WeightUnits.Kilogram.Name));
-            Assert.That($"{result.Value:f4}", Is.EqualTo($"{oneOunceToKilogram:f4}"));
+            Assert.That(result.Value, Is.EqualTo(oneOunceToKilogram));
+        });
+    }
+
+    [Test]
+    public void EqualsTest()
+    {
+        var onePound = new Weight(1, WeightUnits.Ounce);
+        var onePoundToKilogram = new Weight(0.0283495231);
+
+        var result = onePound.Equals(onePoundToKilogram);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.True);
+            Assert.That(onePound, Is.EqualTo(onePoundToKilogram));
+        });
+    }
+
+    [Test]
+    public void CompareToTest()
+    {
+        var onePound = new Weight(1, WeightUnits.Pound);
+        var onePoundToKilogram = new Weight(0.4536);
+
+        var result = onePound.CompareTo(onePoundToKilogram);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.EqualTo(0));
+            Assert.That(onePound, Is.EqualTo(onePoundToKilogram));
         });
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Project_2023.Models.Measurements;
+﻿using Project_2023.Models.Converters;
+
+namespace Project_2023.Models.Measurements;
 
 /// <summary>
 /// Довжина
@@ -43,19 +45,20 @@ public sealed class Length : Measurement
     {
         if (other is null) throw new ArgumentNullException(nameof(other), "Об'єкт для порівннян пустий");
         MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Length);
-        UnitValidator.CompareUnits(Unit, other.Unit);
-
-        return Value.CompareTo(other.Value);
+        
+        var otherValue = new LengthConverter().ConvertToMetric(other).Value;
+        var value = new LengthConverter().ConvertToMetric(this).Value;
+        return value.CompareTo(otherValue);
     }
 
-    // Можливі зміни
     public override bool Equals(Measurement? other)
     {
         if (other is null) return false;
         MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Length);
-        UnitValidator.CompareUnits(Unit, other.Unit);
 
-        return Value.Equals(other.Value);
+        var otherValue = new LengthConverter().ConvertToMetric(other).Value;
+        var value = new LengthConverter().ConvertToMetric(this).Value;
+        return value.Equals(otherValue);
     }
 
     public override string ToString()

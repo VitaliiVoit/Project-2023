@@ -1,14 +1,5 @@
 ﻿using Project_2023.Models;
 using Project_2023.Models.Measurements;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Project_2023.WinFormsUI
 {

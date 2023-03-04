@@ -2,6 +2,9 @@
 
 namespace Project_2023.Models;
 
+/// <summary>
+/// Перевірки для вимірювання
+/// </summary>
 public static class MeasurementValidator
 {
     /// <summary>
@@ -19,6 +22,9 @@ public static class MeasurementValidator
     }
 }
 
+/// <summary>
+/// Перевірки для одиниці вимірювання
+/// </summary>
 public static class UnitValidator
 {
     /// <summary>
@@ -36,21 +42,10 @@ public static class UnitValidator
     }
 
     /// <summary>
-    /// Перевіряє чи одинакові одиниці вимірювання
+    /// Перевіряє чи одиниця вимірювання пуста
     /// </summary>
-    /// <param name="unit"></param>
-    /// <param name="otherUnit"></param>
-    /// <exception cref="ArithmeticException"></exception>
-    public static void CompareUnits(Unit unit, Unit otherUnit)
-    {
-        ThrowIfNull(unit);
-        ThrowIfNull(otherUnit);
-        if (!unit.Equals(otherUnit))
-        {
-            throw new ArithmeticException("Не можна порівняти між собою різні одиниці вимірювання");
-        }
-    }
-
+    /// <param name="unit"> Одиниця вимірювання </param>
+    /// <exception cref="ArgumentException"></exception>
     public static void ThrowIfNull(Unit unit)
     {
         if (unit is null)

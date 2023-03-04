@@ -16,9 +16,9 @@ public class WeightConverter : IMetricConverter
         
         return unit.Name.ToLower() switch
         {
-            "pound" => new Weight(measurement.Value / 0.4536, unit),
-            "stone" => new Weight(measurement.Value / 6.3503, unit),
-            "ounce" => new Weight(measurement.Value / 0.0283495, unit),
+            "pound" => new Weight(Math.Round(measurement.Value / 0.4536, 4), unit),
+            "stone" => new Weight(Math.Round(measurement.Value / 6.3503, 4), unit),
+            "ounce" => new Weight(Math.Round(measurement.Value / 0.0283495231, 4), unit),
             _ => (Weight)measurement,
         };
     }
@@ -32,7 +32,7 @@ public class WeightConverter : IMetricConverter
         {
             "pound" => new Weight(measurement.Value * 0.4536, WeightUnits.Kilogram),
             "stone" => new Weight(measurement.Value * 6.3503, WeightUnits.Kilogram),
-            "ounce" => new Weight(measurement.Value * 0.028349, WeightUnits.Kilogram),
+            "ounce" => new Weight(measurement.Value * 0.0283495231, WeightUnits.Kilogram),
             _ => (Weight)measurement,
         };
     }
