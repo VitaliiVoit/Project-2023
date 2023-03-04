@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project-2023.Models", "Project-2023.Models\Project-2023.Models.csproj", "{60323441-EA86-415F-995C-395FE2CC8964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project-2023.Models", "Project-2023.Models\Project-2023.Models.csproj", "{60323441-EA86-415F-995C-395FE2CC8964}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project-2023.ConsoleUI", "Project-2023.ConsoleUI\Project-2023.ConsoleUI.csproj", "{684B3C6F-E5D7-46F6-9E39-6182C333B827}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project-2023.ConsoleUI", "Project-2023.ConsoleUI\Project-2023.ConsoleUI.csproj", "{684B3C6F-E5D7-46F6-9E39-6182C333B827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project-2023.Tests", "Project-2023.Tests\Project-2023.Tests.csproj", "{11B5E0F0-0D2A-4FB8-84D8-C45DBEBCC795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project-2023.WinFormsUI", "Project-2023.WinFormsUI\Project-2023.WinFormsUI.csproj", "{B6E2779D-F839-470C-A3EA-35BB598F6F4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project-2023.Tests", "Project-2023.Tests\Project-2023.Tests.csproj", "{2ABE8EA3-8734-4CC6-844C-85CA4A4094F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +25,14 @@ Global
 		{684B3C6F-E5D7-46F6-9E39-6182C333B827}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{684B3C6F-E5D7-46F6-9E39-6182C333B827}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{684B3C6F-E5D7-46F6-9E39-6182C333B827}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11B5E0F0-0D2A-4FB8-84D8-C45DBEBCC795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11B5E0F0-0D2A-4FB8-84D8-C45DBEBCC795}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11B5E0F0-0D2A-4FB8-84D8-C45DBEBCC795}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11B5E0F0-0D2A-4FB8-84D8-C45DBEBCC795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6E2779D-F839-470C-A3EA-35BB598F6F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E2779D-F839-470C-A3EA-35BB598F6F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E2779D-F839-470C-A3EA-35BB598F6F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E2779D-F839-470C-A3EA-35BB598F6F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ABE8EA3-8734-4CC6-844C-85CA4A4094F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ABE8EA3-8734-4CC6-844C-85CA4A4094F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ABE8EA3-8734-4CC6-844C-85CA4A4094F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ABE8EA3-8734-4CC6-844C-85CA4A4094F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

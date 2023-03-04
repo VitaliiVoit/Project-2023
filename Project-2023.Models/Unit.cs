@@ -15,7 +15,7 @@ public enum MeasurementType
 /// <param name="Name"> Назва одиниці </param>
 /// <param name="Symbol"> Символ одиниці </param>
 /// <param name="Measurement"> Вимірювання </param>
-public record struct Unit(string Name, string Symbol, MeasurementType Measurement);
+public record Unit(string Name, string Symbol, MeasurementType Measurement);
 
 /// <summary>
 /// Одиниці вимірювання довжини

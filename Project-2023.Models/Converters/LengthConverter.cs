@@ -9,9 +9,12 @@ public class LengthConverter : IMetricConverter
 {
     public Measurement ConvertFromMetric(Measurement measurement, Unit unit)
     {
+        if (measurement is null) throw new ArgumentNullException(nameof(measurement), "Об'єкт для порівннян пустий");
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
+        UnitValidator.ThrowIfNull(unit);
         UnitValidator.ValidateUnitType(unit, MeasurementType.Length);
-
+        if (!measurement.Unit.Equals(LengthUnits.Metre)) unit = new("N/A", "N/A", MeasurementType.Length);
+        
         return unit.Name.ToLower() switch
         {
             "inch" => new Length(measurement.Value / 0.0254, unit),
@@ -24,6 +27,7 @@ public class LengthConverter : IMetricConverter
 
     public Measurement ConvertToMetric(Measurement measurement)
     {
+        if (measurement  is null) throw new ArgumentNullException(nameof(measurement), "Об'єкт для порівннян пустий");
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
 
         return measurement.Unit.Name.ToLower() switch

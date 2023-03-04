@@ -19,9 +19,10 @@ public sealed class Weight : Measurement
     }
     public override Unit Unit
     {
-        get => _unit;
+        get => _unit!;
         init
         {
+            UnitValidator.ThrowIfNull(value);
             UnitValidator.ValidateUnitType(value, MeasurementType.Weigth);
             _unit = value;
         }
@@ -41,7 +42,7 @@ public sealed class Weight : Measurement
 
     public override int CompareTo(Measurement? other)
     {
-        if (other is null) throw new ArgumentNullException("Об'єкт для порівннян пустий");
+        if (other is null) throw new ArgumentNullException("Об'єкт для порівняння пустий");
         MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Weigth);
         UnitValidator.CompareUnits(Unit, other.Unit);
 
@@ -50,7 +51,7 @@ public sealed class Weight : Measurement
 
     public override bool Equals(Measurement? other)
     {
-        if (other is null) throw new ArgumentNullException("Об'єкт для порівннян пустий");
+        if (other is null) throw new ArgumentNullException("Об'єкт для порівняння пустий");
         MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Weigth);
         UnitValidator.CompareUnits(Unit, other.Unit);
 

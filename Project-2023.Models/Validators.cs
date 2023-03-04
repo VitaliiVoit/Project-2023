@@ -36,7 +36,7 @@ public static class UnitValidator
     }
 
     /// <summary>
-    /// 
+    /// Перевіряє чи одинакові одиниці вимірювання
     /// </summary>
     /// <param name="unit"></param>
     /// <param name="otherUnit"></param>
@@ -46,6 +46,14 @@ public static class UnitValidator
         if (!string.Equals(unit.Name, otherUnit.Name, StringComparison.OrdinalIgnoreCase))
         {
             throw new ArithmeticException("Не можна порівняти між собою різні одиниці вимірювання");
+        }
+    }
+
+    public static void ThrowIfNull(Unit unit)
+    {
+        if (unit is null)
+        {
+            throw new ArgumentException("Одиниця вимірювання пуста");
         }
     }
 }

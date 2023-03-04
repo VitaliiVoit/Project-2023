@@ -6,7 +6,7 @@
 public abstract class Measurement : IEquatable<Measurement>, IComparable<Measurement>
 {
     protected double _value;
-    protected Unit _unit;
+    protected Unit? _unit;
     
     /// <summary>
     /// Значення
