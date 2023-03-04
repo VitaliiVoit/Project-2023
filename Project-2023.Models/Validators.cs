@@ -43,7 +43,9 @@ public static class UnitValidator
     /// <exception cref="ArithmeticException"></exception>
     public static void CompareUnits(Unit unit, Unit otherUnit)
     {
-        if (!string.Equals(unit.Name, otherUnit.Name, StringComparison.OrdinalIgnoreCase))
+        ThrowIfNull(unit);
+        ThrowIfNull(otherUnit);
+        if (!unit.Equals(otherUnit))
         {
             throw new ArithmeticException("Не можна порівняти між собою різні одиниці вимірювання");
         }

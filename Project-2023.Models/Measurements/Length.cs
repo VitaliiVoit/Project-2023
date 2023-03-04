@@ -22,7 +22,6 @@ public sealed class Length : Measurement
         get => _unit!;
         init
         {
-            UnitValidator.ThrowIfNull(value);
             UnitValidator.ValidateUnitType(value, MeasurementType.Length);
             _unit = value;
         } 
@@ -49,9 +48,10 @@ public sealed class Length : Measurement
         return Value.CompareTo(other.Value);
     }
 
+    // Можливі зміни
     public override bool Equals(Measurement? other)
     {
-        if (other is null) throw new ArgumentNullException(nameof(other), "Об'єкт для порівннян пустий");
+        if (other is null) return false;
         MeasurementValidator.ValidateMeasurementType(other, MeasurementType.Length);
         UnitValidator.CompareUnits(Unit, other.Unit);
 

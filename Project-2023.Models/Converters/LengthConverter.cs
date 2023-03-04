@@ -11,7 +11,6 @@ public class LengthConverter : IMetricConverter
     {
         if (measurement is null) throw new ArgumentNullException(nameof(measurement), "Об'єкт для порівннян пустий");
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Length);
-        UnitValidator.ThrowIfNull(unit);
         UnitValidator.ValidateUnitType(unit, MeasurementType.Length);
         if (!measurement.Unit.Equals(LengthUnits.Metre)) unit = new("N/A", "N/A", MeasurementType.Length);
         

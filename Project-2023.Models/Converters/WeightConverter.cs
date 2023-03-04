@@ -9,9 +9,8 @@ public class WeightConverter : IMetricConverter
 {
     public Measurement ConvertFromMetric(Measurement measurement, Unit unit)
     {
-        if (measurement is null) throw new ArgumentNullException("Об'єкт для порівннян пустий");
+        if (measurement is null) throw new ArgumentNullException(nameof(measurement), "Об'єкт для порівннян пустий");
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Weigth);
-        UnitValidator.ThrowIfNull(unit);
         UnitValidator.ValidateUnitType(unit, MeasurementType.Weigth);
         if (!measurement.Unit.Equals(WeightUnits.Kilogram)) unit = new("N/A", "N/A", MeasurementType.Weigth);
         
@@ -26,7 +25,7 @@ public class WeightConverter : IMetricConverter
 
     public Measurement ConvertToMetric(Measurement measurement)
     {
-        if (measurement is null) throw new ArgumentNullException("Об'єкт для порівннян пустий");
+        if (measurement is null) throw new ArgumentNullException(nameof(measurement), "Об'єкт для порівннян пустий");
         MeasurementValidator.ValidateMeasurementType(measurement, MeasurementType.Weigth);
 
         return measurement.Unit.Name.ToLower() switch
