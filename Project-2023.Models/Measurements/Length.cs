@@ -5,7 +5,7 @@ namespace Project_2023.Models.Measurements;
 /// <summary>
 /// Довжина
 /// </summary>
-public sealed class Length : Measurement
+public class Length : Measurement
 {
     public override double Value 
     { 
@@ -19,15 +19,17 @@ public sealed class Length : Measurement
             _value = value;
         }
     }
-    public override Unit Unit 
-    { 
+    public override Unit Unit
+    {
         get => _unit!;
         init
         {
             UnitValidator.ValidateUnitType(value, MeasurementType.Length);
             _unit = value;
-        } 
+        }
     }
+
+    public Length() => Unit = LengthUnits.Metre;
 
     public Length(double value)
     {

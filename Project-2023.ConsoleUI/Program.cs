@@ -3,6 +3,8 @@ using Project_2023.Models.Converters;
 using Project_2023.Models.Measurements;
 using System.Text;
 
+const string lengthUnitsMessage = "I -> дюйми, F -> фути, Y -> Ярди, M -> милі :>";
+const string weightUnitsMessage = "P -> фунт, S -> стоун, O -> унція :>";
 Console.OutputEncoding = Encoding.UTF8;
 
 ConsoleKey choice;
@@ -10,14 +12,14 @@ do
 {
     Console.WriteLine("===== Вітаю вас користуваче =====");
 
-    IMetricConverter converter = ChooseConverter();
-
+    IMetricConverter converter = SetConverter();
     Console.WriteLine("\nВи обрали " + converter.GetType().Name);
+
     while (true)
     {
         try
         {
-            ConvertUnit(converter);
+            Console.WriteLine(ConvertMeasurement(converter));
             break;
         }
         catch (Exception ex)
@@ -26,20 +28,20 @@ do
         }
     }
 
-    Console.Write("Бажаєте продовжити? Y/N :>");
-    choice = Console.ReadKey().Key;
-    Console.WriteLine();
+    choice = GetYourChoice("Бажаєте продовжити? Y/N :>");
 } while (choice == ConsoleKey.Y);
 
-static Unit ChooseLengthUnit()
+static ConsoleKey GetYourChoice(string message)
 {
-    Console.WriteLine("Виберіть одиницю вимірювання ");
-    Console.Write("I -> дюйми, F -> фути, Y -> Ярди, M -> милі :>");
-
-    var choiceUnit = Console.ReadKey().Key;
+    Console.Write(message);
+    var key = Console.ReadKey().Key;
     Console.WriteLine();
+    return key;
+}
 
-    return choiceUnit switch
+static Unit ChooseLengthUnit(ConsoleKey key)
+{
+    return key switch
     {
         ConsoleKey.I => LengthUnits.Inch,
         ConsoleKey.F => LengthUnits.Foot,
@@ -49,15 +51,9 @@ static Unit ChooseLengthUnit()
     };
 }
 
-static Unit ChooseWeightUnit()
+static Unit ChooseWeightUnit(ConsoleKey key)
 {
-    Console.WriteLine("Виберіть одиницю вимірювання ");
-    Console.Write("P -> фунт, S -> стоун, O -> унція :>");
-
-    var choiceUnit = Console.ReadKey().Key;
-    Console.WriteLine();
-
-    return choiceUnit switch
+    return key switch
     {
         ConsoleKey.P => WeightUnits.Pound,
         ConsoleKey.S => WeightUnits.Stone,
@@ -66,13 +62,16 @@ static Unit ChooseWeightUnit()
     };
 }
 
-static Unit SetUnit(Func<Unit> chooseMethod)
+static Unit SetUnit(string message, Func<ConsoleKey, Unit> chooseMethod)
 {
     while (true)
     {
+        Console.WriteLine("Виберіть одиницю вимірювання ");
+
+        var choiceUnit = GetYourChoice(message);
         try
         {
-            return chooseMethod();
+            return chooseMethod(choiceUnit);
         }
         catch (Exception ex)
         {
@@ -81,7 +80,7 @@ static Unit SetUnit(Func<Unit> chooseMethod)
     }
 }
 
-static double EnterValue()
+static double EnterMeasurementValue()
 {
     while (true)
     {
@@ -97,23 +96,25 @@ static double EnterValue()
     }
 }
 
-static IMetricConverter ChooseConverter()
+static IMetricConverter ChooseConverter(ConsoleKey key)
+{
+    return key switch
+    {
+        ConsoleKey.L => new LengthConverter(),
+        ConsoleKey.W => new WeightConverter(),
+        _ => throw new Exception("Неправильно вибраний конвертер"),
+    };
+}
+
+static IMetricConverter SetConverter()
 {
     while (true)
     {
+        Console.WriteLine("Виберіть конвертер котрий хочете використати");
+        var choiceConverter = GetYourChoice("L -> LengthConverter \nW -> WeightConverter :>");
         try
         {
-            Console.WriteLine("Виберіть конвертер котрий хочете використати");
-            Console.Write("L -> LengthConverter \nW -> WeightConverter :>");
-            var choiceConverter = Console.ReadKey().Key;
-            Console.WriteLine();
-
-            return choiceConverter switch
-            {
-                ConsoleKey.L => new LengthConverter(),
-                ConsoleKey.W => new WeightConverter(),
-                _ => throw new Exception("Неправильно вибраний конвертер"),
-            };
+            return ChooseConverter(choiceConverter);
         }
         catch (Exception ex)
         {
@@ -122,63 +123,45 @@ static IMetricConverter ChooseConverter()
     }
 }
 
-static void ConvertUnit(IMetricConverter converter)
+static T ConvertToMetric<T>(string message, Func<ConsoleKey, Unit> chooseMethod, IMetricConverter converter) 
+    where T : Measurement, new()
+{
+    var value = EnterMeasurementValue();
+    var unit = SetUnit(message, chooseMethod);
+    var measurement = new T { Value = value, Unit = unit };
+
+    return (T)converter.ConvertToMetric(measurement);
+}
+
+static T ConvertFromMetric<T>(string message, Func<ConsoleKey, Unit> chooseMethod, IMetricConverter converter)
+    where T : Measurement, new()
+{
+    var value = EnterMeasurementValue();
+    var unit = SetUnit(message, chooseMethod);
+    var measurement = new T { Value = value};
+
+    return (T)converter.ConvertFromMetric(measurement, unit);
+}
+
+static Measurement ConvertMeasurement(IMetricConverter converter)
 {
     Console.WriteLine("Виберіть у яку систему переводити");
-    Console.Write("1 -> В метричну \n2 -> В неметричну :>");
-
-    Unit unit;
-    double value;
-    Measurement measurement, convertedMeasurement;
-    var choiceSystem = Console.ReadKey().Key;
-    Console.WriteLine();
+    var choiceSystem = GetYourChoice("1 -> В метричну \n2 -> В неметричну :>");
 
     switch ((choiceSystem, converter))
     {
         case (ConsoleKey.D1, LengthConverter):
             Console.WriteLine("Конвертуємо в метричну систему (Довжина)");
-
-            value = EnterValue();
-            unit = SetUnit(ChooseLengthUnit);
-
-            measurement = new Length(value, unit);
-
-            convertedMeasurement = converter.ConvertToMetric(measurement);
-            Console.WriteLine(convertedMeasurement);
-            break;
-        case (ConsoleKey.D2, LengthConverter):
-            Console.WriteLine("Конвертуємо в неметричну систему (Довжина)");
-
-            value = EnterValue();
-            unit = SetUnit(ChooseLengthUnit);
-
-            measurement = new Length(value);
-
-            convertedMeasurement = converter.ConvertFromMetric(measurement, unit);
-            Console.WriteLine(convertedMeasurement);
-            break;
+            return ConvertToMetric<Length>(lengthUnitsMessage, ChooseLengthUnit, converter);
         case (ConsoleKey.D1, WeightConverter):
             Console.WriteLine("Конвертуємо в метричну систему (Маса)");
-
-            value = EnterValue();
-            unit = SetUnit(ChooseWeightUnit);
-
-            measurement = new Weight(value, unit);
-
-            convertedMeasurement = converter.ConvertToMetric(measurement);
-            Console.WriteLine(convertedMeasurement);
-            break;
+            return ConvertToMetric<Weight>(weightUnitsMessage, ChooseWeightUnit, converter);
+        case (ConsoleKey.D2, LengthConverter):
+            Console.WriteLine("Конвертуємо в неметричну систему (Довжина)");
+            return ConvertFromMetric<Length>(lengthUnitsMessage, ChooseLengthUnit, converter);
         case (ConsoleKey.D2, WeightConverter):
             Console.WriteLine("Конвертуємо в неметричну систему (Маса)");
-
-            value = EnterValue();
-            unit = SetUnit(ChooseWeightUnit);
-
-            measurement = new Weight(value);
-
-            convertedMeasurement = converter.ConvertFromMetric(measurement, unit);
-            Console.WriteLine(convertedMeasurement);
-            break;
+            return ConvertFromMetric<Weight>(weightUnitsMessage, ChooseWeightUnit, converter);
         default:
             throw new Exception("Неправильно вибрана дія");
     }

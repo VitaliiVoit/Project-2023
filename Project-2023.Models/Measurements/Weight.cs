@@ -5,7 +5,7 @@ namespace Project_2023.Models.Measurements;
 /// <summary>
 /// Маса
 /// </summary>
-public sealed class Weight : Measurement
+public class Weight : Measurement
 {
     public override double Value
     {
@@ -28,6 +28,8 @@ public sealed class Weight : Measurement
             _unit = value;
         }
     }
+
+    public Weight() => Unit = WeightUnits.Kilogram;
 
     public Weight(double value)
     {
