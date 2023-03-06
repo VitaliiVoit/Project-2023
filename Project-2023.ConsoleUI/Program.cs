@@ -62,7 +62,7 @@ static Unit ChooseWeightUnit(ConsoleKey key)
     };
 }
 
-static Unit SetUnit(string message, Func<ConsoleKey, Unit> chooseMethod)
+static Unit GetUnit(string message, Func<ConsoleKey, Unit> chooseMethod)
 {
     while (true)
     {
@@ -96,7 +96,7 @@ static double EnterMeasurementValue()
     }
 }
 
-static IMetricConverter ChooseConverter(ConsoleKey key)
+static IMetricConverter GetConverter(ConsoleKey key)
 {
     return key switch
     {
@@ -114,7 +114,7 @@ static IMetricConverter SetConverter()
         var choiceConverter = GetYourChoice("L -> LengthConverter \nW -> WeightConverter :>");
         try
         {
-            return ChooseConverter(choiceConverter);
+            return GetConverter(choiceConverter);
         }
         catch (Exception ex)
         {
@@ -127,7 +127,7 @@ static T ConvertToMetric<T>(string message, Func<ConsoleKey, Unit> chooseMethod,
     where T : Measurement, new()
 {
     var value = EnterMeasurementValue();
-    var unit = SetUnit(message, chooseMethod);
+    var unit = GetUnit(message, chooseMethod);
     var measurement = new T { Value = value, Unit = unit };
 
     return (T)converter.ConvertToMetric(measurement);
@@ -137,7 +137,7 @@ static T ConvertFromMetric<T>(string message, Func<ConsoleKey, Unit> chooseMetho
     where T : Measurement, new()
 {
     var value = EnterMeasurementValue();
-    var unit = SetUnit(message, chooseMethod);
+    var unit = GetUnit(message, chooseMethod);
     var measurement = new T { Value = value};
 
     return (T)converter.ConvertFromMetric(measurement, unit);
